@@ -45,7 +45,6 @@ for (let i = 0; i < images.length; i++) {
       `<div id="thumbnail${i}" class="thumbnail-wrapper brightness">
          <img class="image w-100 h-100 object-fit-cover" src="${elemento["image"]}">
       </div>`
-   
    sliderContent += addImageWrapper;
    thumbnailsContent += addDivThumbnails;
 }
@@ -65,54 +64,11 @@ let currentImage = 0;
 addImageWrapperDom[currentImage].classList.add("show");
 thumbnail[currentImage].classList.remove("brightness");
 
-// const nextDom = document.querySelector("#next");
-// const prevDom = document.querySelector("#prev");
-
-// nextDom.addEventListener("click",
-//    function(){
-
-//       if (currentImage < addImageWrapperDom.length - 1) {
-//          addImageWrapperDom[currentImage].classList.remove("show");
-//          thumbnail[currentImage].classList.add("brightness");
-//          currentImage++;
-//          addImageWrapperDom[currentImage].classList.add("show");
-//          thumbnail[currentImage].classList.remove("brightness");
-//       } else {
-//          addImageWrapperDom[currentImage].classList.remove("show");
-//          thumbnail[currentImage].classList.add("brightness");
-//          currentImage = 0;
-//          addImageWrapperDom[currentImage].classList.add("show");
-//          thumbnail[currentImage].classList.remove("brightness");
-//       }  
-//    }
-// )
-
-// prevDom.addEventListener("click",
-//    function(){
-
-//       if (currentImage > 0) {
-//          addImageWrapperDom[currentImage].classList.remove("show");
-//          thumbnail[currentImage].classList.add("brightness");
-//          currentImage--;
-//          addImageWrapperDom[currentImage].classList.add("show");
-//          thumbnail[currentImage].classList.remove("brightness");
-//       } else {
-//          addImageWrapperDom[currentImage].classList.remove("show");
-//          thumbnail[currentImage].classList.add("brightness");
-//          currentImage = addImageWrapperDom.length - 1;
-//          addImageWrapperDom[currentImage].classList.add("show");  
-//          thumbnail[currentImage].classList.remove("brightness");
-//       }  
-//    }
-// )
-
 for (let i = 0; i < images.length; i++) {
 
    const pippo = document.getElementById(`thumbnail${i}`);
 
-   let pluto = pippo;
-
-   pluto.addEventListener("click", //"mouseover"
+   pippo.addEventListener("click", //"mouseover"
       function(){
          
          addImageWrapperDom[currentImage].classList.remove("show");
@@ -122,4 +78,57 @@ for (let i = 0; i < images.length; i++) {
          thumbnail[currentImage].classList.remove("brightness");
       }
    )
+}
+
+const nextDom = document.getElementById("next");
+const prevDom = document.getElementById("prev");
+const leftDom = document.getElementById("left");
+const rightDom = document.getElementById("right");
+const stopDom = document.getElementById("stop");
+
+let prevImgTimer;
+let nextImgTimer;
+
+nextDom.addEventListener("click",nextImg);
+prevDom.addEventListener("click",prevImg);
+leftDom.addEventListener("click", function() {prevImgTimer = setInterval(prevImg,3000);});
+rightDom.addEventListener("click", function() {nextImgTimer = setInterval(nextImg,3000);});
+stopDom.addEventListener("click",stopImg);
+
+
+function stopImg() {clearInterval(prevImgTimer);clearInterval(nextImgTimer) };
+
+function nextImg() {
+
+   if (currentImage < addImageWrapperDom.length - 1) {
+      addImageWrapperDom[currentImage].classList.remove("show");
+      thumbnail[currentImage].classList.add("brightness");
+      currentImage++;
+      addImageWrapperDom[currentImage].classList.add("show");
+      thumbnail[currentImage].classList.remove("brightness");
+   } else {
+      addImageWrapperDom[currentImage].classList.remove("show");
+      thumbnail[currentImage].classList.add("brightness");
+      currentImage = 0;
+      addImageWrapperDom[currentImage].classList.add("show");
+      thumbnail[currentImage].classList.remove("brightness");
+   }
+}
+
+function prevImg() {
+
+   if (currentImage > 0) {
+      addImageWrapperDom[currentImage].classList.remove("show");
+      thumbnail[currentImage].classList.add("brightness");
+      currentImage--;
+      addImageWrapperDom[currentImage].classList.add("show");
+      thumbnail[currentImage].classList.remove("brightness");
+   } 
+   else {
+      addImageWrapperDom[currentImage].classList.remove("show");
+      thumbnail[currentImage].classList.add("brightness");
+      currentImage = addImageWrapperDom.length - 1;
+      addImageWrapperDom[currentImage].classList.add("show");  
+      thumbnail[currentImage].classList.remove("brightness");
+   }  
 }
